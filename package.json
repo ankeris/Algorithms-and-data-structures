@@ -1,0 +1,14 @@
+{
+    "name": "Algorithms-and-data-structures",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "license": "ISC",
+    "devDependencies": {
+        "jest": "^26.4.2"
+    }
+}
