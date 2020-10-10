@@ -6,7 +6,7 @@
     "main": "index.js",
     "scripts": {
         "test": "jest",
-        "dev": "ts-node-dev --clear --respawn --transpile-only tasks/PalindromicSubstring/index.ts"
+        "dev": "ts-node-dev --clear --respawn --transpile-only tasks/WhereforeArtThou/index.ts"
     },
     "license": "ISC",
     "devDependencies": {
