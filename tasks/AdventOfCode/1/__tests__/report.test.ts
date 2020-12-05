@@ -1,5 +1,4 @@
 import { getTwoNumbersThatSumToNum, multiplyNums } from "..";
-import { findLongestPalindromicSubstring } from "../../../PalindromicSubstring/index";
 
 describe("getTwoNumbersThatSumToNum", () => {
     it("When given sum and many numbers, should return two that add up to sum", () => {
