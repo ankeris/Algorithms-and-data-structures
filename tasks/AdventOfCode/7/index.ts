@@ -51,16 +51,12 @@ const groups2 = groups.reduce((acc: any, curr: any) => {
     };
 }, {});
 
-const sum2 = (topBag: any) => {
+const countAll = (topBag: any) => {
     if (topBag.number == 0) return 0;
-
-    const bagsWithin = groups2[topBag.color];
-
-    let sum = 1;
-    for (const bag of bagsWithin) {
-        sum += bag.number * sum2(bag);
+    const childBags = groups2[topBag.color];
+    let total = 1;
+    for (const bag of childBags) {
+        total += bag.number * countAll(bag);
     }
-    return sum;
+    return total;
 };
-
-console.log(sum2({ number: 1, color: "shiny gold bag" }) - 1);
