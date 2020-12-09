@@ -5,13 +5,15 @@ const groups = readFileSync(path.join(__dirname, "data.txt"), "utf8")
     .toString()
     .split("\n")
     .map((s) => s.replace(/\r$/, ""))
-    .map((a) => a.split("contain"))
-    .reduce((acc: any, curr: any) => {
-        return { ...acc, [curr[0]]: curr[1] };
-    }, {});
+    .map((a) => a.split("contain"));
+
+const groups1 = groups.reduce((acc: any, curr: any) => {
+    return { ...acc, [curr[0]]: curr[1] };
+}, {});
 
 const foundAlready: string[] = [];
 
+// 1
 const findHowManyBags = (groupToSearchIn: any, bagToLookFor: string) => {
     const vals = Object.values(groupToSearchIn);
     const keys = Object.keys(groupToSearchIn);
@@ -30,6 +32,35 @@ const findHowManyBags = (groupToSearchIn: any, bagToLookFor: string) => {
 };
 
 foundAlready.push("shiny gold bag");
-findHowManyBags(groups, "shiny gold bag");
-
+const answ = findHowManyBags(groups1, "shiny gold bag");
 console.log(foundAlready.length);
+
+const groups2 = groups.reduce((acc: any, curr: any) => {
+    const value = curr[1].split(",");
+    return {
+        ...acc,
+        [curr[0].slice(0, -2)]: value.reduce((acc, curr) => {
+            const number = Number(curr.substr(1, 1));
+            const key = curr.substr(3).replace("bags", "bag").replace("bag.", "bag");
+            if (key == " other bag") {
+                return [...acc, { number: 0, color: key.substring(1) }];
+            } else {
+                return [...acc, { number, color: key }];
+            }
+        }, []),
+    };
+}, {});
+
+const sum2 = (topBag: any) => {
+    if (topBag.number == 0) return 0;
+
+    const bagsWithin = groups2[topBag.color];
+
+    let sum = 1;
+    for (const bag of bagsWithin) {
+        sum += bag.number * sum2(bag);
+    }
+    return sum;
+};
+
+console.log(sum2({ number: 1, color: "shiny gold bag" }) - 1);
