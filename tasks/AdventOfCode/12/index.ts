@@ -24,7 +24,7 @@ type ICurrentPose = {
     [Directions.SOUTH]?: number;
     [Directions.EAST]?: number;
     [Directions.WEST]?: number;
-    facing: Direction;
+    facing?: Direction;
 };
 
 type TurnAction = "R90" | "R180" | "R270" | "L90" | "L180" | "L270";
@@ -116,16 +116,47 @@ export const turnFromTo = (currentPose: ICurrentPose, turn: TurnAction): ICurren
 
 // 1
 // starting cords 0, 0
-const getFinalPosition = (actionsArr: string[], currentPos: ICurrentPose) => {
-    return actionsArr.reduce((acc: ICurrentPose, currVal: TurnAction) => {
+const getFinalPosition1 = (actionsArr: string[], currentPos: ICurrentPose) =>
+    actionsArr.reduce((acc: ICurrentPose, currVal: TurnAction) => {
         if (currVal.includes("R") || currVal.includes("L")) {
             return turnFromTo(acc, currVal);
         } else {
             return flyFromTo(acc, currVal);
         }
     }, currentPos as ICurrentPose);
-};
 
-const res1 = getFinalPosition(actions, { N: 0, E: 0, facing: "E" });
+const res1 = getFinalPosition1(actions, { N: 0, E: 0, facing: "E" });
+console.log(res1);
 
 // 2
+// const getFinalPosition2 = (actionsArr: string[], currentPosShip: ICurrentPose, currentPosWaypont: ICurrentPose) => {
+
+// };
+
+let currentPosShip: ICurrentPose = { N: 0, E: 0 };
+let currentPosWaypont: ICurrentPose = { N: 1, E: 10 };
+const actionsTest = ["F75", "R90"];
+// const actionsTest = ["F75", "L90", "N5", "W2", "N5"];
+
+for (const action of actions) {
+    // Move the ship towards waypoint
+    if (action.includes("F")) {
+        const [_, ...rest] = action;
+        const value = Number(rest.join(""));
+        Object.keys(currentPosWaypont).forEach((key) => {
+            currentPosShip = flyFromTo(currentPosShip, `${key}${currentPosWaypont[key] * value}`);
+        });
+    }
+    // move the waypoint
+    else if (action.includes("R") || action.includes("L")) {
+        const newObj = {};
+        Object.keys(currentPosWaypont).forEach((key) => {
+            newObj[turnsMatrix[key][action]] = currentPosWaypont[key];
+        });
+        currentPosWaypont = newObj;
+    } else {
+        currentPosWaypont = flyFromTo(currentPosWaypont, action);
+    }
+}
+
+console.log(currentPosShip);
