@@ -129,15 +129,8 @@ const res1 = getFinalPosition1(actions, { N: 0, E: 0, facing: "E" });
 console.log(res1);
 
 // 2
-// const getFinalPosition2 = (actionsArr: string[], currentPosShip: ICurrentPose, currentPosWaypont: ICurrentPose) => {
-
-// };
-
 let currentPosShip: ICurrentPose = { N: 0, E: 0 };
 let currentPosWaypont: ICurrentPose = { N: 1, E: 10 };
-const actionsTest = ["F75", "R90"];
-// const actionsTest = ["F75", "L90", "N5", "W2", "N5"];
-
 for (const action of actions) {
     // Move the ship towards waypoint
     if (action.includes("F")) {
@@ -158,5 +151,3 @@ for (const action of actions) {
         currentPosWaypont = flyFromTo(currentPosWaypont, action);
     }
 }
-
-console.log(currentPosShip);
