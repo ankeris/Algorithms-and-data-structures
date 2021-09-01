@@ -6,7 +6,7 @@
     "main": "index.js",
     "scripts": {
         "test": "jest",
-        "dev": "ts-node-dev --clear --respawn --transpile-only tasks/AdventOfCode/12/index.ts"
+        "dev": "ts-node-dev --clear --respawn --transpile-only tasks/September/1/index.ts"
     },
     "license": "ISC",
     "devDependencies": {
